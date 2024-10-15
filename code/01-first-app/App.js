@@ -14,13 +14,24 @@ export default function App() {
     );
   };
 
+  function deleteGoalHandler(id) {
+    console.log('DELETE');
+    setCourseGoals((currentCourseGoals) => {
+      return currentCourseGoals.
+        filter((goal) => goal.id !== id);
+    });
+  }
+
   return (
     <View style={styles.appContainer}>
       <GoalInput onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
         <Text>List of goals...</Text>
         <FlatList data={courseGoals} renderItem={(itemData) => {
-          return <GoalItem text={itemData.item.text} />
+          return <GoalItem
+            id={itemData.item.id}
+            text={itemData.item.text}
+            onDeleteItem={deleteGoalHandler} />
         }}
           keyExtractor={(item, index) => {
             return item.id;
